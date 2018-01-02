@@ -3,13 +3,16 @@
 
 Road::Road(sf::RenderWindow& _okno) : okno(_okno) {
 	std::cout << "ROAD start....\n";
-	t.loadFromFile("road.png");
-	r.setSize(sf::Vector2f(200, 400));
+	t.loadFromFile("road.jpg");
+	r.setSize(sf::Vector2f(256, 800));
 	//r.setFillColor(sf::Color::Color(127, 127, 127, 255));
 	r.setTexture(&t);
-	r.setPosition((okno.getSize().x / 2)-(r.getSize().x)/2, 0);
-	widok.setSize(400, 100);
-	widok.setCenter(500, 155);
+	r.setPosition((okno.getSize().x / 2)-(r.getSize().x)/2, -32);
+	widok.setSize(1024, 768);
+	widok.setCenter(512, 384);
+	std::cout << widok.getCenter().x << "------------" << widok.getCenter().y << "\n";
+	std::cout << widok.getSize().x << "------------" << widok.getSize().y << "\n";
+	
 }
 
 
@@ -22,11 +25,11 @@ sf::RectangleShape Road::roadDisplay(){
 }
 
 void Road::roadUpdate() {
-	std::cout << "update road...\n";
+	//std::cout << "update road...\n";
 	widok.move(0, -1);
-	okno.setView(widok);
-	std::cout << widok.getCenter().y << "\n";
-	if (widok.getCenter().y <= 80)
-		widok.setCenter(500, 155);
+	std::cout << widok.getCenter().y<< "\n";
+	if (widok.getCenter().y <= 352)
+		widok.setCenter(512, 384);
 	//sf::View currentView = okno.getView();
+	okno.setView(widok);
 }
