@@ -22,7 +22,7 @@ void Engine::start() {
 			if (zdarz.type == sf::Event::Closed)
 				okno.close();
 		}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			r->roadUpdate();
 
 		okno.clear(sf::Color::Black);
