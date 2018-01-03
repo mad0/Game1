@@ -9,12 +9,14 @@ Engine::Engine() {
 	okno.setKeyRepeatEnabled(false);
 	r = new Road(okno);
 	car = new Car(okno);
+	enemy = new Enemy(okno);
 }
 
 Engine::~Engine() {
 	std::cout << "ENGINE stop....\n";
 	delete car;
 	delete r;
+	delete enemy;
 }
 
 void Engine::start() {
@@ -41,6 +43,8 @@ void Engine::start() {
 		okno.draw(r->roadDisplay());
 		car->carUpdate();
 		okno.draw(car->carDisplay());
+		enemy->enemyUpdate();
+		okno.draw(enemy->enemyDisplay());
 		okno.display();
 	}
 }

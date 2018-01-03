@@ -8,6 +8,7 @@ class Engine {
 		sf::RenderWindow okno;
 		Road *r;
 		Car *car;
+		Enemy *enemy;
 	public:
 		Engine();
 		~Engine();
