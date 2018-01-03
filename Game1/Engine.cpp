@@ -9,14 +9,13 @@ Engine::Engine() {
 	okno.setKeyRepeatEnabled(false);
 	r = new Road(okno);
 	car = new Car(okno);
-	enemy = new Enemy(okno);
+	enemys.push_back(new Enemy(okno));
 }
 
 Engine::~Engine() {
 	std::cout << "ENGINE stop....\n";
 	delete car;
 	delete r;
-	delete enemy;
 }
 
 void Engine::start() {
@@ -37,9 +36,15 @@ void Engine::start() {
 				car->moveLeft();
 		}
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			
-		if (enemy->enemyPosition().intersects(car->carPosition()))
-			std::cout << "BOOM\n";
+		for (auto x : enemys) {
+			if (x->enemyPosition().intersects(car->carPosition())) {
+				std::cout << "BOOM\n";
+				std::cout << enemys.size() << "\n";
+				delete (&x);
+				std::cout << enemys.size() << "\n";
+			}
+		}
+		
 		//std::cout << car->carPosition().left << " //// " << car->carPosition().top << "\n";
 		//std::cout << enemy->enemyPosition().left << " //// " << enemy->enemyPosition().top << "\n";
 		okno.clear(sf::Color(36, 255, 91, 0));
@@ -47,8 +52,14 @@ void Engine::start() {
 		okno.draw(r->roadDisplay());
 		car->carUpdate();
 		okno.draw(car->carDisplay());
-		enemy->enemyUpdate();
-		okno.draw(enemy->enemyDisplay());
+		if (enemys.size() > 0) {
+			for (auto x : enemys) {
+				x->enemyUpdate();
+				okno.draw(x->enemyDisplay());
+			}
+			
+		}
+		
 		okno.display();
 	}
 }

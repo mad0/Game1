@@ -1,15 +1,13 @@
 #include "Enemy.h"
 #include <iostream>
 
-const int Enemy::bombPos [3] = { 365, 485, 605 };
+const int Enemy::bombPos [3] = { 355, 470, 585 };
 
 Enemy::Enemy(sf::RenderWindow &_okno) :okno(_okno) {
 	enemyTexture.loadFromFile("bomb.png");
 	enemySprite.setTexture(enemyTexture);
 	pos = (std::rand() % 3) + 0;
 	enemySprite.setPosition(bombPos[pos], 0);
-	std::cout << pos << "\n";
-	enemyView = okno.getDefaultView();
 	czas = sf::seconds(0.0f);
 	zegar.restart();
 }
