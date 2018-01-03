@@ -38,6 +38,10 @@ void Engine::start() {
 		}
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			
+		if (enemy->enemyPosition().intersects(car->carPosition()))
+			std::cout << "BOOM\n";
+		//std::cout << car->carPosition().left << " //// " << car->carPosition().top << "\n";
+		//std::cout << enemy->enemyPosition().left << " //// " << enemy->enemyPosition().top << "\n";
 		okno.clear(sf::Color(36, 255, 91, 0));
 		r->roadUpdate();
 		okno.draw(r->roadDisplay());

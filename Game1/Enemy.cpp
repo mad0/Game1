@@ -1,14 +1,18 @@
 #include "Enemy.h"
+#include <iostream>
+
+const int Enemy::bombPos [3] = { 365, 485, 605 };
 
 Enemy::Enemy(sf::RenderWindow &_okno) :okno(_okno) {
 	enemyTexture.loadFromFile("bomb.png");
 	enemySprite.setTexture(enemyTexture);
-	enemySprite.setPosition(300, 300);
-	enemyView.setSize(310, 128);
-	enemyView.setCenter(350, 340);
-	okno.setView(enemyView);
+	pos = (std::rand() % 3) + 0;
+	enemySprite.setPosition(bombPos[pos], 0);
+	std::cout << pos << "\n";
+	enemyView = okno.getDefaultView();
+	czas = sf::seconds(0.0f);
+	zegar.restart();
 }
-
 
 Enemy::~Enemy() {
 }
@@ -18,5 +22,16 @@ sf::Sprite Enemy::enemyDisplay() {
 }
 
 void Enemy::enemyUpdate() {
+	czas = zegar.getElapsedTime();
+	if (czas.asSeconds() > 0.4) {
+		enemySprite.move(0, 40);
+		zegar.restart();
+	}
 	okno.setView(enemyView);
 }
+
+sf::FloatRect Enemy::enemyPosition() {
+	return enemySprite.getGlobalBounds();
+}
+
+

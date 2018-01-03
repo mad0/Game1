@@ -14,5 +14,6 @@ public:
 	void carUpdate();
 	void moveLeft();
 	void moveRight();
+	sf::FloatRect carPosition();
 };
 
