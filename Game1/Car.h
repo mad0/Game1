@@ -12,5 +12,7 @@ public:
 	~Car();
 	sf::Sprite carDisplay();
 	void carUpdate();
+	void moveLeft();
+	void moveRight();
 };
 

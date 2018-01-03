@@ -5,8 +5,8 @@ Road::Road(sf::RenderWindow& _okno) : okno(_okno) {
 	speed = 0.008;
 	accu = sf::seconds(0.0f);
 	std::cout << "ROAD start....\n";
-	t.loadFromFile("road.png");
-	r.setSize(sf::Vector2f(256, 800));
+	t.loadFromFile("road3.png");
+	r.setSize(sf::Vector2f(384, 800));
 	//r.setFillColor(sf::Color::Color(127, 127, 127, 255));
 	r.setTexture(&t);
 	r.setPosition((okno.getSize().x / 2)-(r.getSize().x)/2, 0);
@@ -42,7 +42,7 @@ void Road::roadUpdate() {
 	if (widok.getCenter().y <= 200)
 		widok.setCenter(512, 600);
 	//sf::View currentView = okno.getView();
-	//okno.setView(widok);
+	okno.setView(widok);
 	
 }
 

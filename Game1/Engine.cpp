@@ -29,14 +29,18 @@ void Engine::start() {
 				r->speedDown();
 			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Up)
 				r->speedUp();
+			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Right)
+				car->moveRight();
+			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Left)
+				car->moveLeft();
 		}
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			
+		okno.clear(sf::Color(36, 255, 91, 0));
 		r->roadUpdate();
-		okno.clear(sf::Color::Black);
 		okno.draw(r->roadDisplay());
+		car->carUpdate();
 		okno.draw(car->carDisplay());
 		okno.display();
 	}
-	
 }
