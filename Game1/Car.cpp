@@ -4,7 +4,7 @@ Car::Car(sf::RenderWindow& _okno) : okno(_okno) {
 	carTexture.loadFromFile("car.png");
 	carSprite.setTexture(carTexture);
 	carSprite.setScale(0.5, 0.5);
-	carSprite.setPosition(450, 990);
+	carSprite.setPosition(420, 990);
 	carSprite.setRotation(180);
 }
 
@@ -22,7 +22,7 @@ void Car::carUpdate() {
 
 void Car::moveLeft() {
 	sf::Vector2f nextPos(carSprite.getPosition().x - 115, 990);
-	if (nextPos.x>449)
+	if (nextPos.x>419)
 		carSprite.setPosition(carSprite.getPosition().x - 115, 990);
 }
 

@@ -3,19 +3,26 @@
 
 Engine::Engine() {
 	std::cout << "ENGINE start....\n";
+	enemyCout = 0;
+	boom = false;
+	spawnTime = sf::seconds(0.0f);
+	score = 0;
+	lives = 3;
 	okno.create(sf::VideoMode(1024, 768), "Game1");
 	//okno.setFramerateLimit(60);
 	//okno.setVerticalSyncEnabled(true);
 	okno.setKeyRepeatEnabled(false);
 	r = new Road(okno);
 	car = new Car(okno);
-	enemys.push_back(new Enemy(okno));
+	hud = new HUD(okno);
+	czas.restart();
 }
 
 Engine::~Engine() {
 	std::cout << "ENGINE stop....\n";
 	delete car;
 	delete r;
+	delete hud;
 }
 
 void Engine::start() {
@@ -36,30 +43,59 @@ void Engine::start() {
 				car->moveLeft();
 		}
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		for (auto x : enemys) {
-			if (x->enemyPosition().intersects(car->carPosition())) {
-				std::cout << "BOOM\n";
-				std::cout << enemys.size() << "\n";
-				delete (&x);
-				std::cout << enemys.size() << "\n";
-			}
-		}
 		
-		//std::cout << car->carPosition().left << " //// " << car->carPosition().top << "\n";
-		//std::cout << enemy->enemyPosition().left << " //// " << enemy->enemyPosition().top << "\n";
-		okno.clear(sf::Color(36, 255, 91, 0));
-		r->roadUpdate();
-		okno.draw(r->roadDisplay());
-		car->carUpdate();
-		okno.draw(car->carDisplay());
-		if (enemys.size() > 0) {
-			for (auto x : enemys) {
-				x->enemyUpdate();
-				okno.draw(x->enemyDisplay());
-			}
-			
-		}
-		
-		okno.display();
+		update();
+		display();
 	}
+}
+
+void Engine::collision() {
+	for (int z = 0; z < enemys.size(); z++) {
+		//BOMB with CAR (-lives)
+		if (enemys[z]->enemyPosition().intersects(car->carPosition())) {
+			lives--;
+			boom = true;
+			enemys.erase(enemys.begin() + z);
+			
+		} else {
+			if (enemys[z]->enemyPosition().top >= 1000) {
+				score++;
+				boom = false;
+				enemys.erase(enemys.begin() + z);
+			}
+		}
+	}
+}
+
+void Engine::update() {
+	okno.clear(sf::Color(36, 255, 91, 0));
+	//okno.clear(sf::Color::Black);
+	hud->updateHUD(lives, 20, score);
+	hud->displayHUD();
+	r->roadUpdate();
+	okno.draw(r->roadDisplay());
+	car->carUpdate();
+	okno.draw(car->carDisplay());
+	if (enemys.size() > 0) {
+		for (auto x : enemys) {
+			x->enemyUpdate();
+			okno.draw(x->enemyDisplay());
+		}
+	}
+	enemySpawn();
+	collision();
+	if (boom)
+		hud->displayBOOM();
+}
+
+void Engine::display() {
+	okno.display();
+}
+
+void Engine::enemySpawn() {
+	spawnTime = czas.getElapsedTime();
+	if (spawnTime.asSeconds() > 0.5) {
+		enemys.push_back(new Enemy(okno));
+		czas.restart();
+	}	
 }

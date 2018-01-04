@@ -21,7 +21,7 @@ sf::Sprite Enemy::enemyDisplay() {
 
 void Enemy::enemyUpdate() {
 	czas = zegar.getElapsedTime();
-	if (czas.asSeconds() > 0.4) {
+	if (czas.asSeconds() > 0.1) {
 		enemySprite.move(0, 40);
 		zegar.restart();
 	}
