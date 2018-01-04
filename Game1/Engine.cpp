@@ -94,7 +94,7 @@ void Engine::display() {
 
 void Engine::enemySpawn() {
 	spawnTime = czas.getElapsedTime();
-	if (spawnTime.asSeconds() > 0.5) {
+	if (spawnTime.asSeconds() > 0.6) {
 		enemys.push_back(new Enemy(okno));
 		czas.restart();
 	}	
