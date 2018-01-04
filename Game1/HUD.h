@@ -8,6 +8,7 @@ private:
 	sf::Text speed;
 	sf::Text lives;
 	sf::Text boom;
+	sf::Text theend;
 	sf::Font font;
 public:
 	HUD(sf::RenderWindow&);
@@ -15,5 +16,6 @@ public:
 	void updateHUD(int, int, int);
 	void displayHUD();
 	void displayBOOM();
+	void displayTheEnd();
 };
 

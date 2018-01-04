@@ -3,6 +3,7 @@
 
 Engine::Engine() {
 	std::cout << "ENGINE start....\n";
+	play = true;
 	enemyCout = 0;
 	boom = false;
 	spawnTime = sf::seconds(0.0f);
@@ -26,27 +27,29 @@ Engine::~Engine() {
 }
 
 void Engine::start() {
-	while (okno.isOpen())
-	{
-		sf::Event zdarz;
-		while (okno.pollEvent(zdarz))
+		while (okno.isOpen())
 		{
-			if (zdarz.type == sf::Event::Closed)
-				okno.close();
-			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Down)
-				r->speedDown();
-			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Up)
-				r->speedUp();
-			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Right)
-				car->moveRight();
-			if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Left)
-				car->moveLeft();
+			sf::Event zdarz;
+			while (okno.pollEvent(zdarz))
+			{
+				if (zdarz.type == sf::Event::Closed)
+					okno.close();
+				if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Down)
+					r->speedDown();
+				if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Up)
+					r->speedUp();
+				if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Right)
+					car->moveRight();
+				if (zdarz.type == sf::Event::KeyPressed && zdarz.key.code == sf::Keyboard::Left)
+					car->moveLeft();
+			}
+			//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			if (play) {
+				update();
+				display();
+			}
+			
 		}
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		
-		update();
-		display();
-	}
 }
 
 void Engine::collision() {
@@ -68,6 +71,7 @@ void Engine::collision() {
 }
 
 void Engine::update() {
+	std::cout << play << "\n";
 	okno.clear(sf::Color(36, 255, 91, 0));
 	//okno.clear(sf::Color::Black);
 	hud->updateHUD(lives, 20, score);
@@ -86,6 +90,13 @@ void Engine::update() {
 	collision();
 	if (boom)
 		hud->displayBOOM();
+	if (lives <= 0) {
+		boom = false;
+		hud->displayTheEnd();
+		play = false;
+	}
+		
+		
 }
 
 void Engine::display() {

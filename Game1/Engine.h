@@ -7,6 +7,7 @@
 
 class Engine {
 	private:
+		bool play;
 		sf::RenderWindow okno;
 		Road *r;
 		std::vector<Enemy*> enemys;

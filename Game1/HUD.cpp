@@ -7,16 +7,25 @@ HUD::HUD(sf::RenderWindow& _okno) : okno(_okno){
 	speed.setFont(font);
 	score.setFont(font);
 	lives.setFont(font);
+	//boom
 	boom.setFont(font);
+	boom.setString("");
+	boom.setCharacterSize(110);
+	boom.setPosition(720, 200);
 	boom.setString("BOOM!");
-	boom.setCharacterSize(200);
-	boom.setPosition(499, 350);
+	//TheEnd
+	theend.setFont(font);
+	theend.setString("THE END");
+	theend.setCharacterSize(190);
+	theend.setPosition(210, 350);
+	theend.setFillColor(sf::Color::Red);
+	///
 	speed.setFillColor(sf::Color::Red);
 	score.setFillColor(sf::Color::Red);
 	lives.setFillColor(sf::Color::Red);
-	speed.setPosition(0, 100);
-	score.setPosition(0, 150);
-	lives.setPosition(0, 200);
+	speed.setPosition(60, 100);
+	score.setPosition(60, 150);
+	lives.setPosition(60, 200);
 }
 
 HUD::~HUD() {
@@ -28,16 +37,15 @@ void HUD::updateHUD(int _lives, int _speed, int _score) {
 	score.setString("SCORE: " + std::to_string(_score));
 }
 
-void HUD::displayHUD()
-{
+void HUD::displayHUD() {
 	okno.draw(lives);
 	okno.draw(speed);
 	okno.draw(score);
 }
 
-void HUD::displayBOOM() {
-	okno.draw(boom);
-}
+void HUD::displayTheEnd() { okno.draw(theend);  }
+
+void HUD::displayBOOM() { okno.draw(boom);}
 
 
 
